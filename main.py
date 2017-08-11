@@ -12,25 +12,21 @@ lmbda = 0.1;
 total_itrs = 200
 
 x,y = loadData("data.mat")
-w1,w2 = loadWeights("weights.mat")
-
-w1 = np.transpose(w1)
-w2 = np.transpose(w2)
+# w1,w2 = loadWeights("weights.mat")
+#
+# w1 = np.transpose(w1)
+# w2 = np.transpose(w2)
 
 m,n = x.shape
 X,Y = process_data(x,y,m,n,num_labels=num_labels)
 m,n = X.shape
 
-print("=============== Checking Cost Function (w/ Regularization) ================")
-J,_,_ = loss(X,Y,w1,w2,1)
-print(J)
-
-print("=========== Training the neural net ===============")
+print("=========== Time to Train... ===============")
 w1 = np.random.rand(input_layer+1,hidden_layer)
 w2 = np.random.rand(hidden_layer+1,num_labels)
 
 loss_history = np.zeros(total_itrs);
-for i in range(total_itrs):
+for i in range(100):
     cost, dw1, dw2 = loss(X,Y,w1,w2,lmbda)
     print(cost)
     loss_history[i] = cost
@@ -44,5 +40,5 @@ plt.show()
 
 print("=========== Accuracy on the training set ===============")
 pred,_ = forward(X,w1,w2)
-
+print(np.argmax(pred[0]))
 print(np.mean((np.argmax(pred,1)+1) == y)*100)
