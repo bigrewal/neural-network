@@ -26,10 +26,6 @@ Y = X ^ 1
 def sigmoid(x):
     return 1.0/(1.0 + np.exp(-x))
 
-#Gradient for our tanh activation function
-def tanh_grad(x):
-    return 1 - np.tanh(x)**2
-
 def sigmoid_grad(x):
     return sigmoid(x)*(1.0 - sigmoid(x))
 
@@ -76,7 +72,8 @@ for i in range(tot_ittrs):
 
     print("Itteration: %d, Loss: %.8f" % (i, loss))
 
-# Try to predict something
+
+# Let's Predict Something..
 x = np.random.binomial(1, 0.5, n_in)
 x = np.reshape(x,(1,10))
 print(x)
