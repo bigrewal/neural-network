@@ -37,18 +37,18 @@ def train(X, y, W1, W2, B1, B2):
     B = np.dot(Z, W2) + B2
     Y = sigmoid(B)
 
+    # Loss
+    loss = -np.mean(y * np.log(Y) + (1 - y) * np.log(1 - Y))
+
     # Backward propogation
     delta3 = Y - y                                          # Error
     d_b2 = np.sum(delta3,axis=0)                            # derivate of error with respect to b2
     d_w2 = np.dot(np.transpose(Z),delta3)                   # derivate of error with respect to W2
     d_Z = np.dot(delta3,W2)                                 # derivate of error with respect to Z
 
-    # d_tan = tanh_grad(A) * d_Z
     d_sig = sigmoid_grad(A) * d_Z
     d_b1 = np.sum(d_sig,axis=0)                              #derivate of error with respect to b1
     d_w1 = np.dot(np.transpose(X),d_sig)                     #derivate of error with respect to W1
-
-    loss = -np.mean(y * np.log(Y) + (1 - y) * np.log(1 - Y))
 
     return  loss, [d_w1,d_w2,d_b1,d_b2]
 
@@ -70,13 +70,13 @@ for i in range(tot_ittrs):
 
     print("Itteration: %d, Loss: %.8f" % (i, loss))
 
-pred = predict(X,W1, W2, b1, b2)
-print(pred == Y)
-accuracy = np.mean(pred == Y)
-print("Accuracy on the training set: ",accuracy)
+# pred = predict(X,W1, W2, b1, b2)
+# print(pred == Y)
+# accuracy = np.mean(pred == Y)
+# print("Accuracy on the training set: ",accuracy)
 
 # Let's Predict Something..
 x = np.random.binomial(1, 0.5, n_in)
 x = np.reshape(x,(1,10))
 print(x)
-print("XOR prediction: ",predict(x,W1, W2, b1, b2))
+print(predict(x,W1, W2, b1, b2))
