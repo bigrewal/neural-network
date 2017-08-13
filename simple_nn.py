@@ -17,8 +17,6 @@ W2 = np.random.normal(scale=0.5, size=(n_hidden, n_out)) #(10,10)
 b1 = np.zeros(n_hidden)
 b2 = np.zeros(n_out)
 
-params = [W1,W2,b1,b2]
-
 # Generate our training data
 X = np.random.binomial(1, 0.5, (n_samples, n_in))
 Y = X ^ 1
@@ -41,7 +39,7 @@ def train(X, y, W1, W2, B1, B2):
 
     # Backward propogation
     delta3 = Y - y                                          # Error with respect to sigmoid
-    d_b2 = np.sum(delta3,axis=0)                            # Bias 2 gradient
+    d_b2 = np.sum(delta3,axis=0)                            # derivate of error with respect to
     d_w2 = np.dot(np.transpose(Z),delta3)                   # Weight 2 Gradient
     d_Z = np.dot(delta3,W2)
 
@@ -64,19 +62,23 @@ def predict(X,W1, W2, B1, B2):
 
 # Train
 for i in range(tot_ittrs):
-    loss, grads = train(X, Y, *params)
-    params[0] = params[0] - (learning_rate * grads[0])
-    params[1] = params[1] - (learning_rate * grads[1])
-    params[2] = params[2] - (learning_rate * grads[2])
-    params[3] = params[3] - (learning_rate * grads[3])
+    loss, grads = train(X, Y, W1,W2,b1,b2)
+    W1 = W1 - (learning_rate * grads[0])
+    W2 = W2 - (learning_rate * grads[1])
+    b1 = b1 - (learning_rate * grads[2])
+    b2 = b2 - (learning_rate * grads[3])
 
     print("Itteration: %d, Loss: %.8f" % (i, loss))
 
+pred = predict(X,W1, W2, b1, b2)
+print(pred == Y)
+accuracy = np.mean(pred == Y)
+print("Accuracy on the training set: ",accuracy)
 
 # Let's Predict Something..
 x = np.random.binomial(1, 0.5, n_in)
 x = np.reshape(x,(1,10))
 print(x)
-print("XOR prediction: ",predict(x, *params))
+print("XOR prediction: ",predict(x,W1, W2, b1, b2))
 
 
