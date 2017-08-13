@@ -38,15 +38,15 @@ def train(X, y, W1, W2, B1, B2):
     Y = sigmoid(B)
 
     # Backward propogation
-    delta3 = Y - y                                          # Error with respect to sigmoid
-    d_b2 = np.sum(delta3,axis=0)                            # derivate of error with respect to
-    d_w2 = np.dot(np.transpose(Z),delta3)                   # Weight 2 Gradient
-    d_Z = np.dot(delta3,W2)
+    delta3 = Y - y                                          # Error
+    d_b2 = np.sum(delta3,axis=0)                            # derivate of error with respect to b2
+    d_w2 = np.dot(np.transpose(Z),delta3)                   # derivate of error with respect to W2
+    d_Z = np.dot(delta3,W2)                                 # derivate of error with respect to Z
 
     # d_tan = tanh_grad(A) * d_Z
     d_sig = sigmoid_grad(A) * d_Z
-    d_b1 = np.sum(d_sig,axis=0)                              #Bias 1 gradient
-    d_w1 = np.dot(np.transpose(X),d_sig)                     #Weight 1 gradient
+    d_b1 = np.sum(d_sig,axis=0)                              #derivate of error with respect to b1
+    d_w1 = np.dot(np.transpose(X),d_sig)                     #derivate of error with respect to W1
 
     loss = -np.mean(y * np.log(Y) + (1 - y) * np.log(1 - Y))
 
