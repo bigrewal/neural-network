@@ -80,5 +80,3 @@ x = np.random.binomial(1, 0.5, n_in)
 x = np.reshape(x,(1,10))
 print(x)
 print("XOR prediction: ",predict(x,W1, W2, b1, b2))
-
-
